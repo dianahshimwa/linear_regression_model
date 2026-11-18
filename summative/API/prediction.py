@@ -66,6 +66,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5000",
         "http://127.0.0.1:5000",
+        "https://women-enterprise-sales.onrender.com",
     ],
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
