@@ -221,3 +221,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Track Flutter source despite the Python lib/ rule.
+!summative/FlutterApp/lib/
+!summative/FlutterApp/lib/**
