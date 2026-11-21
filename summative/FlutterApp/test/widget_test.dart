@@ -1,30 +1,37 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:women_enterprise/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Shows eight inputs and a Predict button', (tester) async {
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Business Sales Estimate'), findsOneWidget);
+    expect(find.byType(TextField), findsNWidgets(8));
+    expect(find.widgetWithText(FilledButton, 'Predict'), findsOneWidget);
+    expect(find.text('Your sales estimate will appear here.'), findsOneWidget);
   });
+
+  final invalidAgeCases = {
+    '': 'Owner age (18–100) is required.',
+    'abc': 'Owner age (18–100): enter a valid number.',
+    '200': 'Owner age (18–100): enter a value between 18.0 and 100.0.',
+  };
+
+  for (final entry in invalidAgeCases.entries) {
+    testWidgets('Shows an error for invalid age "${entry.key}"', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const MyApp());
+
+      await tester.enterText(find.byType(TextField).first, entry.key);
+
+      final button = find.widgetWithText(FilledButton, 'Predict');
+      await tester.ensureVisible(button);
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+
+      expect(find.text(entry.value), findsOneWidget);
+    });
+  }
 }
