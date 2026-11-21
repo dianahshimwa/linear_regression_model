@@ -58,11 +58,10 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Allow only the listed local browser origins during development.
-# Restrict methods and headers to those needed by the API; credentials
-# are disabled because the API does not use browser cookies.
-# Native Flutter mobile requests are not restricted by browser CORS.
-# Add the actual Render origin to this list when deploying.
+# Allow only the listed local development origins and deployed Render origin.
+# Restrict methods to GET/POST and headers to Content-Type.
+# Credentials are disabled because this API does not use browser cookies.
+# Browser CORS does not restrict native Flutter mobile requests.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
