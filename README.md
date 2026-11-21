@@ -62,6 +62,8 @@ Python dependencies are managed with uv. The repository includes
 
 ## 4. YouTube video demo
 
+https://youtu.be/UeDlqzQnVY8
+
 ## 5. Run the mobile app
 
 ### Prerequisites
